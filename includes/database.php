@@ -10,6 +10,11 @@ try {
 
     $sslCa = getenv('DB_SSL_CA') ?: '/etc/secrets/ca.pem';
 
+    error_log('DB_SSL_CA: ' . ($sslCa ?: 'NOT SET'));
+    error_log('Certificate exists: ' . (file_exists($sslCa) ? 'YES' : 'NO'));
+    error_log('Certificate readable: ' . (is_readable($sslCa) ? 'YES' : 'NO'));
+    error_log('Certificate is file: ' . (is_file($sslCa) ? 'YES' : 'NO'));
+
     if (!is_file($sslCa) || !is_readable($sslCa)) {
         throw new RuntimeException('Aiven CA certificate is missing or unreadable.');
     }
